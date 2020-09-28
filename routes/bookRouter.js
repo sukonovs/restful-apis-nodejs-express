@@ -27,8 +27,13 @@ function routes(Book) {
   bookRouter.use('/books/:bookId', (req, res, next) => {
     Book.findById(req.params.bookId, (err, book) => {
       if (err) {
-        return res.send(404);
+        return res.send(err);
       }
+
+      if (!book) {
+        return res.sendStatus(404);
+      }
+
       req.book = book;
 
       return next();
