@@ -64,8 +64,7 @@ function routes(Book) {
       }
 
       Object.entries(req.body).forEach((item) => {
-        const key = item[0];
-        const value = item[1];
+        const [key, value] = item;
         book[key] = value;
       });
 
