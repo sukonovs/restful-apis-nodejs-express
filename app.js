@@ -8,6 +8,8 @@ const port = process.env.PORT || 3000;
 const Book = require('./models/bookModel');
 const bookRouter = require('./routes/bookRouter')(Book);
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useUnifiedTopology', true);
 mongoose.connect('mongodb://localhost/bookAPI');
 
 app.use(bodyParser.urlencoded({ extended: true }));
