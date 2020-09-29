@@ -10,7 +10,12 @@ const bookRouter = require('./routes/bookRouter')(Book);
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect('mongodb://localhost/bookAPI');
+
+if (process.env.ENV === 'Test') {
+  mongoose.connect('mongodb://localhost/bookAPI_Test');
+} else {
+  mongoose.connect('mongodb://localhost/bookAPI');
+}
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -20,6 +25,8 @@ app.get('/', (req, res) => {
   res.send('Hello world');
 });
 
-app.listen(port, () => {
+app.server = app.listen(port, () => {
   console.log(`Running port ${port}`);
 });
+
+module.exports = app;
