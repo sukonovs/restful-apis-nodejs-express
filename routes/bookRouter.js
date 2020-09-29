@@ -10,7 +10,8 @@ function routes(Book) {
     .post(controller.post);
 
   bookRouter.use('/books/:bookId', (req, res, next) => {
-    Book.findById(req.params.bookId, (err, book) => {
+    const { bookId } = req.params;
+    Book.findById(bookId, (err, book) => {
       if (err) {
         return res.send(err);
       }
@@ -53,10 +54,11 @@ function routes(Book) {
         delete req.body._id;
       }
 
-      Object.entries(req.body).forEach((item) => {
-        const [key, value] = item;
-        book[key] = value;
-      });
+      Object.entries(req.body)
+        .forEach((item) => {
+          const [key, value] = item;
+          book[key] = value;
+        });
 
       book.save((err) => {
         if (err) {
